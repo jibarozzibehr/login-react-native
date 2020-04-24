@@ -129,7 +129,7 @@ class MusicApp extends Component {
 
     render() {
         return (
-            <KeyboardAvoidingView style={{flex:1,backgroundColor:'white',justifyContent: 'flex-end'}} behavior="padding" enabled>
+            <KeyboardAvoidingView style={{flex:1,backgroundColor:'white',justifyContent: 'flex-end'}} behavior={Platform.OS === "ios" ? "padding" : null} enabled>
             
             <View 
                 style={{
