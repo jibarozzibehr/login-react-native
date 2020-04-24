@@ -69,7 +69,7 @@ function runTiming(clock, value, dest) {
     ]);
   }
 
-class MusicApp extends Component {
+class Login extends Component {
     constructor() {
         super()
 
@@ -156,6 +156,7 @@ class MusicApp extends Component {
                 </Animated.View>
                 </DismissKeyboard>
 
+                <DismissKeyboard>
                 <View style={{ height: height/3,  justifyContent: "center"}}>
                     <TapGestureHandler onHandlerStateChange={this.onStateChange}>
                         <Animated.View style={{ ...styles.button, opacity: this.buttonOpacity, transform: [{translateY: this.buttonY}] }}>
@@ -167,7 +168,7 @@ class MusicApp extends Component {
                         <Text style={{ ...styles.text, color: "white"}}>SIGN IN WITH FACEBOOK</Text>
                     </Animated.View>
                     
-                    <DismissKeyboard>
+                    
                     <Animated.View style={{
                         height: height/3,
                         ...StyleSheet.absoluteFill,
@@ -178,14 +179,18 @@ class MusicApp extends Component {
                         transform: [{translateY: this.textInputY}],
                         backgroundColor: 'white',
                         borderTopLeftRadius: 40,
-                        borderTopRightRadius: 40
+                        borderTopRightRadius: 40,
+                        marginLeft: 5,
+                        marginRight: 5
                         }}>
                         
-                        <TapGestureHandler onHandlerStateChange={this.onCloseState} onPress={() => Keyboard.dismiss()}>
+                        <DismissKeyboard>
+                        <TapGestureHandler onHandlerStateChange={this.onCloseState}>
                             <Animated.View style={styles.closeButton}>
                                 <Animated.Text style={{fontSize: 15, transform: [{rotate: concat(this.rotateCross, "deg")}]}}>X</Animated.Text>
                             </Animated.View>
                         </TapGestureHandler>
+                        </DismissKeyboard>
                         
                         
                         <TextInput
@@ -213,16 +218,16 @@ class MusicApp extends Component {
                             <Text style={styles.whiteText}>SIGN IN</Text>
                         </Animated.View>
                     </Animated.View>
-                    </DismissKeyboard>
-                </View>
 
+                </View>
+                </DismissKeyboard>
             </View>
             
             </KeyboardAvoidingView>
         );
     }
 }
-export default MusicApp;
+export default Login;
 
 const styles = StyleSheet.create({
     container: {
@@ -288,12 +293,14 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         position: "absolute",
         top: -20,
-        left: width/2-20,
+        left: width/2-25,
         shadowOffset: {
             width: 2,
             height: 2
         },
         shadowColor: "black",
-        shadowOpacity: 0.2
+        shadowOpacity: 0.2,
+        borderColor: Platform.OS === 'android' ? "#d5d5d5" : "transparent",
+        borderWidth: 1
     }
 });
