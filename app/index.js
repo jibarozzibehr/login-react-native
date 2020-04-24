@@ -5,7 +5,9 @@ import {
     StyleSheet,
     Dimensions,
     TextInput,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    TouchableWithoutFeedback,
+    Keyboard
 } from "react-native";
 import Animated, {Easing} from "react-native-reanimated";
 import { TapGestureHandler, State } from "react-native-gesture-handler";
@@ -13,6 +15,12 @@ import Svg, {Image, Circle, ClipPath} from "react-native-svg";
 
 
 const { width, height } = Dimensions.get('window')
+
+const DismissKeyboard = ({ children }) => (
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        {children}
+    </TouchableWithoutFeedback>
+);
 
 const {
     Value,
@@ -122,6 +130,7 @@ class MusicApp extends Component {
     render() {
         return (
             <KeyboardAvoidingView style={{flex:1,backgroundColor:'white',justifyContent: 'flex-end'}} behavior="height" enabled>
+            
             <View 
                 style={{
                     flex: 1,
@@ -129,6 +138,7 @@ class MusicApp extends Component {
                     justifyContent: "flex-end"
                 }}
             >
+                <DismissKeyboard>
                 <Animated.View style={{...StyleSheet.absoluteFill, transform: [{translateY: this.bgY}]}}>
                     <Svg height={height+50} width={width}>
                         <ClipPath id="clip">
@@ -144,6 +154,7 @@ class MusicApp extends Component {
                         />
                     </Svg>
                 </Animated.View>
+                </DismissKeyboard>
 
                 <View style={{ height: height/3,  justifyContent: "center"}}>
                     <TapGestureHandler onHandlerStateChange={this.onStateChange}>
@@ -155,7 +166,8 @@ class MusicApp extends Component {
                     <Animated.View style={{ ...styles.button, backgroundColor: "#2E71DC", opacity: this.buttonOpacity, transform: [{translateY: this.buttonY}] }}>
                         <Text style={{ ...styles.text, color: "white"}}>SIGN IN WITH FACEBOOK</Text>
                     </Animated.View>
-
+                    
+                    <DismissKeyboard>
                     <Animated.View style={{
                         height: height/3,
                         ...StyleSheet.absoluteFill,
@@ -168,28 +180,44 @@ class MusicApp extends Component {
                         borderTopLeftRadius: 40,
                         borderTopRightRadius: 40
                         }}>
-                        <TapGestureHandler onHandlerStateChange={this.onCloseState}>
+                        
+                        <TapGestureHandler onHandlerStateChange={this.onCloseState} onPress={() => Keyboard.dismiss()}>
                             <Animated.View style={styles.closeButton}>
                                 <Animated.Text style={{fontSize: 15, transform: [{rotate: concat(this.rotateCross, "deg")}]}}>X</Animated.Text>
                             </Animated.View>
                         </TapGestureHandler>
+                        
+                        
                         <TextInput
                             placeholder="EMAIL"
                             style={styles.textInput}
                             placeholderTextColor="black"
+                            textContentType="emailAddress"
+                            keyboardType="email-address"
+                            autoCapitalize="none"
+                            returnKeyType = { "next" }
+                            onSubmitEditing={() => { this.secondTextInput.focus(); }}
+                            blurOnSubmit={false}
+                            multiline={false}
                         />
                         <TextInput
                             placeholder="PASSWORD"
                             style={styles.textInput}
                             placeholderTextColor="black"
+                            textContentType="password"
+                            secureTextEntry={true}
+                            ref={(input) => { this.secondTextInput = input; }}
+                            multiline={false}
                         />
                         <Animated.View style={styles.blackButton}>
                             <Text style={styles.whiteText}>SIGN IN</Text>
                         </Animated.View>
                     </Animated.View>
+                    </DismissKeyboard>
                 </View>
 
             </View>
+            
             </KeyboardAvoidingView>
         );
     }
