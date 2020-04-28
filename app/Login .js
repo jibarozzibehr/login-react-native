@@ -7,7 +7,9 @@ import {
     TextInput,
     KeyboardAvoidingView,
     TouchableWithoutFeedback,
-    Keyboard
+    Keyboard,
+    Alert,
+    Button
 } from "react-native";
 import Animated, {Easing} from "react-native-reanimated";
 import { TapGestureHandler, State } from "react-native-gesture-handler";
@@ -67,7 +69,18 @@ function runTiming(clock, value, dest) {
       cond(state.finished, debug('stop clock', stopClock(clock))),
       state.position
     ]);
-  }
+}
+
+function alerta() {
+    Alert.alert(
+        "Próximamente",
+        "Función disponible próximamente.",
+        [
+        { text: "OK", onPress: () => console.log("OK Pressed") }
+        ],
+        { cancelable: false }
+    );
+};
 
 class Login extends Component {
     constructor() {
@@ -164,9 +177,11 @@ class Login extends Component {
                         </Animated.View>
                     </TapGestureHandler>
 
+                    
                     <Animated.View style={{ ...styles.button, backgroundColor: "#2E71DC", opacity: this.buttonOpacity, transform: [{translateY: this.buttonY}] }}>
                         <Text style={{ ...styles.text, color: "white"}}>SIGN IN WITH FACEBOOK</Text>
                     </Animated.View>
+                    
                     
                     
                     <Animated.View style={{

@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Asset } from 'expo-asset';
 import { AppLoading } from 'expo';
-import Login from './app/index';
+import Login from './app/Login ';
 
 function cacheImages(images) {
   return images.map(image => {
@@ -22,14 +22,14 @@ export default class App extends React.Component {
     }
   }
 
-  async _loadAssetsAsync() {
+  /*async _loadAssetsAsync() {
     const imageAssets = cacheImages([require('./assets/bg.jpg')]);
 
     await Promise.all([...imageAssets]);
-  }
+  }*/
 
   render() {
-    if (!this.state.isReady) {
+    /*if (!this.state.isReady) {
       return (
         <AppLoading
           startAsync={this._loadAssetsAsync}
@@ -37,7 +37,7 @@ export default class App extends React.Component {
           onError={console.warn}
         />
       );
-    }
+    }*/
 
     return <Login />
   }
